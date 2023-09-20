@@ -5,6 +5,7 @@
  
 with all_graph_resources as (
     select * from {{ ref('int_all_graph_resources') }}
+    where not is_excluded
 ),
 
 folders as (
@@ -13,6 +14,7 @@ folders as (
 
 all_dag_relationships as (
     select * from {{ ref('int_all_dag_relationships') }}
+    where not child_is_excluded
 ),
 
 staging_models as (
@@ -65,6 +67,6 @@ unioned as (
 
 select * from unioned
 
-{{ filter_exceptions(this) }}
+{{ filter_exceptions(model.name) }}
  
 

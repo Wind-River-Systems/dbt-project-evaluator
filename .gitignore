@@ -5,3 +5,6 @@ dbt_modules/
 dbt_packages/
 .vscode
 integration_tests/state/
+site/
+env/
+.DS_Store
