@@ -31,7 +31,8 @@ final as (
         direct_model_relationships.parent_resource_type,
         direct_model_relationships.child,
         direct_model_relationships.child_resource_type,
-        direct_model_relationships.distance
+        direct_model_relationships.distance,
+        parent_directory_path
     from direct_model_relationships
     inner join model_and_source_joined
         on direct_model_relationships.child = model_and_source_joined.child
