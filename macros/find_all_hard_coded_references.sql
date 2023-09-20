@@ -6,7 +6,7 @@
 
     {%- set all_hard_coded_references_list = [] -%}
 
-    {% if node.resource_type == 'model' %}
+    {% if node.resource_type == 'model' and node.language == "sql" %}
 
         {% if execute %}
         {%- set model_raw_sql = node.raw_sql or node.raw_code -%}
@@ -199,7 +199,7 @@
                 (from|join)\s+
 
                 # second matching group
-                # 1 or 0 of (opening bracket, backtick, or quotation mark)            
+                # 1 of (opening bracket, backtick, or quotation mark)            
                 ([\[`\"\'])
 
                 # third matching group
@@ -207,7 +207,7 @@
                 ([\w ]+)
                 
                 # fourth matching group
-                # 1 or 0 of (closing bracket, backtick, or quotation mark) folowed by a whitespace character or end of string
+                # 1 of (closing bracket, backtick, or quotation mark) folowed by a whitespace character or end of string
                 ([\]`\"\'])(?=\s|$)
 
                 '

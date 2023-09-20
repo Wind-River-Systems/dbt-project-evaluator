@@ -3,6 +3,9 @@
 
 with all_graph_resources as (
     select * from {{ ref('int_all_graph_resources') }}
+    where not is_excluded
+    -- exclude required metricflow time spine
+    and resource_name != 'metricflow_time_spine'
 ),
 
 naming_convention_prefixes as (
@@ -17,7 +20,7 @@ appropriate_prefixes as (
         {{ dbt.listagg(
             measure='prefix_value', 
             delimiter_text="', '", 
-            order_by_clause='order by prefix_value' if target.type in ['snowflake','redshift','duckdb']) 
+            order_by_clause='order by prefix_value' if target.type in ['snowflake','redshift','duckdb','trino'])
         }} as appropriate_prefixes
     from naming_convention_prefixes
     group by model_type
@@ -51,4 +54,4 @@ inappropriate_model_names as (
 
 select * from inappropriate_model_names
 
-{{ filter_exceptions(this) }}
+{{ filter_exceptions(model.name) }}

@@ -11,7 +11,10 @@ all_graph_resources as (
         file_name,
         model_type,
         materialized,
-        source_name 
+        is_public, 
+        access, 
+        source_name,
+        is_excluded
     from {{ ref('int_all_graph_resources') }}
 ),
 

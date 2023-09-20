@@ -2,6 +2,8 @@ with all_dag_relationships as (
     select  
         *
     from {{ ref('int_all_dag_relationships') }}
+    where not parent_is_excluded
+    and not child_is_excluded
 ),
 
 -- find all models without children
@@ -37,7 +39,7 @@ model_fanout_agg as (
         {{ dbt.listagg(
             measure = 'child', 
             delimiter_text = "', '", 
-            order_by_clause = 'order by child' if target.type in ['snowflake','redshift','duckdb']) 
+            order_by_clause = 'order by child' if target.type in ['snowflake','redshift','duckdb','trino'])
         }} as leaf_children
     from model_fanout
     group by 1, 2
@@ -46,4 +48,4 @@ model_fanout_agg as (
 
 select * from model_fanout_agg
 
-{{ filter_exceptions(this) }}
+{{ filter_exceptions(model.name) }}
