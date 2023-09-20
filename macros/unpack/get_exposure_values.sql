@@ -8,11 +8,9 @@
 
         {%- set nodes_list = graph.exposures.values() -%}
         {%- set values = [] -%}
-        
-        {%- set paths = get_paths(path_pattern = var('path_pattern') ) -%}
-          
-        {%- for node in nodes_list
-          | selectattr("original_file_path", "in", paths) -%}
+
+        {%- for node in nodes_list -%}
+
           {%- set values_line = 
             [
               wrap_string_with_quotes(node.unique_id),

@@ -8,10 +8,7 @@
     {%- set nodes_list = graph.nodes.values() -%}
     {%- set values = [] -%}
 
-    {%- set paths = get_paths(path_pattern = var('path_pattern') ) -%}
-          
-    {%- for node in nodes_list
-        | selectattr("original_file_path", "in", paths) -%}
+    {%- for node in nodes_list -%}
 
         {%- set hard_coded_references = dbt_project_evaluator.find_all_hard_coded_references(node) -%}
         {%- set contract = node.contract.enforced if node.contract else false -%}
