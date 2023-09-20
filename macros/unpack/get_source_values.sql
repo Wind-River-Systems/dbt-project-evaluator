@@ -7,11 +7,8 @@
     {%- if execute -%}
     {%- set nodes_list = graph.sources.values() -%}
     {%- set values = [] -%}
-    
-    {%- set paths = get_paths(path_pattern = var('path_pattern') ) -%}
-          
-    {%- for node in nodes_list
-        | selectattr("original_file_path", "in", paths) -%}
+
+    {%- for node in nodes_list -%}
 
         {%- set exclude_source = dbt_project_evaluator.set_is_excluded(node, resource_type="source") -%}
 
