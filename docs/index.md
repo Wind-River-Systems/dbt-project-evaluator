@@ -21,7 +21,6 @@ Currently, the following adapters are supported:
 - Redshift
 - Snowflake
 - DuckDB
-- Trino (tested with Iceberg connector)
 
 ## Using This Package
 
